@@ -36,14 +36,7 @@ namespace RimThreaded
 				StartSample(__instance);
 			for (int index = 0; index < samples(__instance).Count; ++index)
 			{
-				try
-				{
-					samples(__instance)[index].Update();
-				}
-				catch
-				{
-					Log.Error("samples(__instance)[index].Update()");
-				}
+				samples(__instance)[index].Update();
 			}
 			return false;
 		}

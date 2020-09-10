@@ -67,11 +67,10 @@ namespace RimThreaded
 			Log.Message("RimThreaded Harmony is loading...");
 			Type original = null;
 			Type patched = null;
-
 			
 			//ContentFinderTexture2D			
 			original = typeof(ContentFinder<Texture2D>);
-			patched = typeof(ContentFinder_Texture2D);
+			patched = typeof(ContentFinder_Texture2D_Patch);
 			Prefix(original, patched, "Get");
 
 			//ContentFinderTexture2D			
@@ -190,6 +189,9 @@ namespace RimThreaded
 			patched = typeof(GenSpawn_Patch);
 			Prefix(original, patched, "WipeExistingThings");
 			Prefix(original, patched, "CheckMoveItemsAside");
+			Prefix(original, patched, "Spawn", new Type[] {
+				typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4),
+				typeof(WipeMode), typeof(bool) });
 
 			//PawnDestinationReservationManager
 			original = typeof(PawnDestinationReservationManager);
@@ -341,6 +343,7 @@ namespace RimThreaded
 			original = typeof(Building_Door);
 			patched = typeof(Building_Door_Patch);
 			Prefix(original, patched, "get_BlockedOpenMomentary");
+			Prefix(original, patched, "get_DoorPowerOn");
 
 			//ThoughtHandler						
 			original = typeof(ThoughtHandler);
@@ -378,12 +381,6 @@ namespace RimThreaded
 			patched = typeof(Explosion_Patch);
 			Prefix(original, patched, "Tick");
 
-			//GenSpawn
-			original = typeof(GenSpawn);
-			patched = typeof(GenSpawn_Patch);
-			Prefix(original, patched, "Spawn", new Type[] {
-				typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4),
-				typeof(WipeMode), typeof(bool) });
 
 			//AttackTargetReservationManager
 			original = typeof(AttackTargetReservationManager);
@@ -422,6 +419,29 @@ namespace RimThreaded
 			Prefix(original, patched, "Push");
 			Prefix(original, patched, "Pop");
 			Prefix(original, patched, "Clear");
+
+			//MapPawns
+			original = typeof(MapPawns);
+			patched = typeof(MapPawns_Patch);
+			Prefix(original, patched, "get_AllPawns");
+			Prefix(original, patched, "LogListedPawns");
+			Prefix(original, patched, "RegisterPawn");
+			Prefix(original, patched, "get_AnyPawnBlockingMapRemoval");
+			Prefix(original, patched, "get_FreeColonistsSpawnedOrInPlayerEjectablePodsCount");
+			Prefix(original, patched, "DeRegisterPawn");
+			Prefix(original, patched, "FreeHumanlikesSpawnedOfFaction");
+			Prefix(original, patched, "SpawnedPawnsInFaction");
+
+			//Region
+			original = typeof(Region);
+			patched = typeof(Region_Patch);
+			Prefix(original, patched, "DangerFor");
+
+			//Pawn_WorkSettings
+			original = typeof(Pawn_WorkSettings);
+			patched = typeof(Pawn_WorkSettings_Patch);
+			Prefix(original, patched, "CacheWorkGiversInOrder");
+
 
 
 			//PERFORMANCE IMPROVEMENTS
